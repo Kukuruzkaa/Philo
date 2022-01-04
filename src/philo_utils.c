@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/05 17:41:44 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/01/24 16:07:04 by ddiakova         ###   ########.fr       */
+/*   Created: 2022/01/04 16:59:57 by ddiakova          #+#    #+#             */
+/*   Updated: 2022/01/04 17:01:34 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-void	*ft_bzero(void *s, size_t n)
+long int	ft_atoi(const char *str)
 {
-	size_t	index;
-	char	*str;
+	int			i;
+	int			sign;
+	long int	res;
 
-	str = (char *)s;
-	index = 0;
-	if (n == 0)
-		return (NULL);
-	while (index < n)
+	i = 0;
+	sign = 1;
+	res = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		str[index] = '\0';
-		index++;
+		if (str[i] == '-')
+		{
+			sign = -sign;
+		}		
+		i++;
 	}
-	return (str);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (res * sign);
 }

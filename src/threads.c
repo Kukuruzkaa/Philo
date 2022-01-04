@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/04 17:24:34 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/02 12:39:46 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+//#include "philo.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
@@ -32,19 +32,10 @@ void	*routine(void *mutex)
 
 int	main(int argc, char **argv)
 {
-	pthread_t		thread;
+	pthread_t	thread[4];
 	pthread_mutex_t	mutex;
-	t_philo			philo;
-	int				i;
 	
-	if (argc == 4 || argc == 5)
-		philo.p_count = ft_atoi(argv[1]);	
 	pthread_mutex_init(&mutex, 0);
-	i = 1;
-	while (i < philo.p_count)
-	{
-		
-	}
 	for (int i = 0; i < 4; i++)
 	{
 		if (pthread_create(&thread[i], 0, &routine, &mutex) != 0)
@@ -59,7 +50,20 @@ int	main(int argc, char **argv)
 		printf ("Thread %d has finished exec\n", i);
 	}
 	
+/*	pthread_t thread1;
+	pthread_t thread2;
+	pthread_mutex_t mutex;
 
+
+	pthread_mutex_init(&mutex, 0);
+	if (pthread_create(&thread1, 0, &routine, 0) != 0)
+		return (1);
+	if (pthread_create(&thread2, 0, &routine, 0) != 0)
+		return (2);
+	if (pthread_join(thread1, 0) != 0)
+		return (3);
+	if (pthread_join(thread2, 0) != 0)
+		return (4);*/
 	pthread_mutex_destroy(&mutex);
 	return (0);
 }

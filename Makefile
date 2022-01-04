@@ -6,15 +6,14 @@
 #    By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/23 12:55:59 by ddiakova          #+#    #+#              #
-#    Updated: 2021/12/23 17:59:25 by ddiakova         ###   ########.fr        #
+#    Updated: 2022/01/04 17:02:01 by ddiakova         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= philo
 
-LIBFT 			= Libft/libft.a
-
-SRCS 			= philo.c
+SRCS 			= philo.c \
+				philo_utils.c
 				
 OBJS			= $(SRCS:%.c=%.o)
 
@@ -34,19 +33,14 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p ${@D}
 	${CC} ${CFLAGS} ${FSAN} -I./inc -c $< -o $@
 
-$(LIBFT):
-				@make bonus -C Libft
-
-$(NAME):		$(OBJS) $(LIBFT)
-				$(CC) ${FSAN} -o $(NAME) $(OBJS) $(LIBS) Libft/libft.a
+$(NAME):		$(OBJS)
+				$(CC) ${FSAN} -o $(NAME) $(OBJS)
 
 clean:
 				$(RM) $(OBJDIR)
-				make clean -C Libft
 				
 fclean:			clean
 				$(RM) $(NAME)
-				make fclean -C Libft
 
 re: 			fclean all
 
