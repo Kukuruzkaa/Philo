@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/04 17:23:13 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:47:22 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@ typedef struct		s_forks
 typedef	struct s_philo
 {
 	int		p_id;
-	int		p_count;
 	int		meal;
 	long	start_time;
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
-	int 	blocked;
 	
 }				t_philo;
 
+typedef struct s_table
+{
+	int		p_count;
+}				t_table;
 
+
+long int	ft_atoi(const char *str);
 #endif

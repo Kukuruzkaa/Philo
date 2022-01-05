@@ -6,7 +6,7 @@
 #    By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/23 12:55:59 by ddiakova          #+#    #+#              #
-#    Updated: 2022/01/04 17:02:01 by ddiakova         ###   ########.fr        #
+#    Updated: 2022/01/05 19:26:30 by ddiakova         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS			= $(SRCS:%.c=%.o)
 RM 				= rm -rf
 
 CC 				= clang
-CFLAGS 			= -Wall -Werror -Wextra -g -c 
+CFLAGS 			= -Wall -Werror -Wextra -g -pthread 
 #FSAN			= -g3 -fsanitize=address
 SRCDIR 			= src
 OBJDIR 			= objs
@@ -34,7 +34,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	${CC} ${CFLAGS} ${FSAN} -I./inc -c $< -o $@
 
 $(NAME):		$(OBJS)
-				$(CC) ${FSAN} -o $(NAME) $(OBJS)
+				$(CC) $(CFLAGS) ${FSAN} -o $(NAME) $(OBJS)
 
 clean:
 				$(RM) $(OBJDIR)
