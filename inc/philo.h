@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/05 18:47:22 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/08 18:40:09 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,21 @@ typedef	struct s_philo
 {
 	int		p_id;
 	int		meal;
-	long	start_time;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
+	size_t	start_time;
+	size_t	time_to_die;
+	size_t	time_to_eat;
+	size_t	time_to_sleep;
+	pthread_mutex_t	*mutex_print;
+	pthread_mutex_t *forks[2]; // pointe sur les 2 forks/*
+	
 	
 }				t_philo;
 
 typedef struct s_table
 {
 	int		p_count;
+	pthread_mutex_t mutex_print;
+	pthread_mutex_t *forks; // malloc mes forks = nb_philo
 }				t_table;
 
 
