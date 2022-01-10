@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/08 18:28:06 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:03:06 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 void	*routine(void *param)
 {
@@ -24,16 +25,18 @@ void	*routine(void *param)
 
 	ph = (t_philo *)param;
 	
-	
-//	printf("after init : %ld\n", mutex->__align);
 	pthread_mutex_lock(ph->mutex_print);
 	write (1, "Start thinking\n", 16);
-//	printf("lock : %ld\n", mutex->__align);
 	sleep(1);
 	write (1, "End thinking\n", 14);
 	pthread_mutex_unlock(ph->mutex_print);
-//	printf("unlock : %ld\n", mutex->__align);
 	return (NULL);
+}
+
+size_t	get_time()
+{
+	struct timeval tv;
+	
 }
 
 int	main(int argc, char **argv)
@@ -48,6 +51,7 @@ int	main(int argc, char **argv)
 		return (1);
 	
 	table.p_count = ft_atoi(argv[1]);
+	table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table.p_count);
 	philo = (t_philo *)malloc(sizeof(t_philo) * table.p_count);
 	thread = (pthread_t *)malloc(sizeof(pthread_t) * table.p_count);
 	if (philo == NULL || thread == NULL)
@@ -60,20 +64,22 @@ int	main(int argc, char **argv)
 	
 	pthread_mutex_init(&mutex, 0);
 	
-	pthread_mutex_lock(&mutex);
+
 	
 	i = 0;
 	while (i < table.p_count)
 	{
 		philo[i].p_id = i + 1;
+		pthread_mutex_lock(&mutex);
 		printf ("Philo %d has been created\n", i + 1);
+		pthread_mutex_unlock(&mutex);
 		philo[i].mutex_print = &mutex;
 		if (pthread_create(&thread[i], 0, &routine, &philo[i]) != 0)
 			return (1);
 		i++;
 	}
 	
-	pthread_mutex_unlock(&mutex);
+
 	
 	i = 0;
 	while (i < table.p_count)

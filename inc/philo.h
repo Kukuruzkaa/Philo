@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/08 18:40:09 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/10 17:15:17 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef	struct s_philo
 	size_t	time_to_die;
 	size_t	time_to_eat;
 	size_t	time_to_sleep;
+	size_t	last_meal;
 	pthread_mutex_t	*mutex_print;
 	pthread_mutex_t *forks[2]; // pointe sur les 2 forks/*
 	
