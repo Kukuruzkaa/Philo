@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+        */
+/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/10 18:03:06 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/10 20:00:30 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	*routine(void *param)
 
 	ph = (t_philo *)param;
 	
+	check_state();
+	taking_forks(ph);
 	pthread_mutex_lock(ph->mutex_print);
 	write (1, "Start thinking\n", 16);
 	sleep(1);
@@ -37,6 +39,8 @@ size_t	get_time()
 {
 	struct timeval tv;
 	
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));	
 }
 
 int	main(int argc, char **argv)
@@ -50,26 +54,33 @@ int	main(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 		return (1);
 	
-	table.p_count = ft_atoi(argv[1]);
-	table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table.p_count);
-	philo = (t_philo *)malloc(sizeof(t_philo) * table.p_count);
-	thread = (pthread_t *)malloc(sizeof(pthread_t) * table.p_count);
+	table.count = ft_atoi(argv[1]);
+	table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table.count);
+	philo = (t_philo *)malloc(sizeof(t_philo) * table.count);
+	philo->p_count = table.count;
+	thread = (pthread_t *)malloc(sizeof(pthread_t) * table.count);
 	if (philo == NULL || thread == NULL)
 		return (1);
-	philo[0].time_to_die = ft_atoi(argv[2]);
-	philo[0].time_to_eat = ft_atoi(argv[3]);
-	philo[0].time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-			philo[0].meal = ft_atoi(argv[5]);
+	i = 0;
+	while (i < table.count)
+	{
+		philo[i].p_id = i + 1;
+		philo[i].time_to_die = ft_atoi(argv[2]);
+		philo[i].time_to_eat = ft_atoi(argv[3]);
+		philo[i].time_to_sleep = ft_atoi(argv[4]);
+		if (argc == 6)
+			philo[i].meal = ft_atoi(argv[5]);
+		philo[i].start_time = get_time();
+		philo[i].last_meal = philo->start_time;
+		i++;
+	}
 	
 	pthread_mutex_init(&mutex, 0);
 	
-
-	
 	i = 0;
-	while (i < table.p_count)
+	while (i < table.count)
 	{
-		philo[i].p_id = i + 1;
+		
 		pthread_mutex_lock(&mutex);
 		printf ("Philo %d has been created\n", i + 1);
 		pthread_mutex_unlock(&mutex);
@@ -80,9 +91,8 @@ int	main(int argc, char **argv)
 	}
 	
 
-	
 	i = 0;
-	while (i < table.p_count)
+	while (i < table.count)
 	{
 		if (pthread_join(thread[i], 0) != 0) 
 	 		return (2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+        */
+/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/10 17:15:17 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/10 19:57:09 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <pthread.h>
-
+# include <sys/time.h>
 
 typedef struct		s_forks
 {
@@ -29,6 +29,7 @@ typedef struct		s_forks
 typedef	struct s_philo
 {
 	int		p_id;
+	int		p_count;
 	int		meal;
 	size_t	start_time;
 	size_t	time_to_die;
@@ -43,11 +44,13 @@ typedef	struct s_philo
 
 typedef struct s_table
 {
-	int		p_count;
+	int		count;
 	pthread_mutex_t mutex_print;
 	pthread_mutex_t *forks; // malloc mes forks = nb_philo
 }				t_table;
 
 
 long int	ft_atoi(const char *str);
+void	taking_forks(t_philo *philo);
+void	puting_down(t_philo *philo);
 #endif
