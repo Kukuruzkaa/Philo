@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+         #
+#    By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/23 12:55:59 by ddiakova          #+#    #+#              #
-#    Updated: 2022/01/10 19:25:54 by ddiakova         ###   ########.fr        #
+#    Updated: 2022/01/14 18:44:49 by ddiakova         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= philo
 
 SRCS 			= philo.c \
 				philo_utils.c \
-				routine.c
+				routine.c \
 				
 OBJS			= $(SRCS:%.c=%.o)
 
