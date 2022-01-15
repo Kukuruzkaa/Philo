@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+        */
+/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/14 18:46:58 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/15 21:58:52 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,24 @@
 typedef	struct s_philo
 {
 	int		p_id;
-	int		p_count;
+	int		max_meal;
 	int		meal;
-	size_t	start_time;
+	size_t	*start_time;
 	size_t	time_to_die;
 	size_t	time_to_eat;
 	size_t	time_to_sleep;
 	size_t	last_meal;
 	bool	*dead;
+	pthread_mutex_t 	m_meal;
 	pthread_mutex_t	*mutex_print;
 	pthread_mutex_t *forks[2]; 
 	pthread_t thread;
-	
-	
 }				t_philo;
 
 typedef struct s_table
 {
 	int		count;
+	size_t	start_time;
 	bool	dead;
 	t_philo *philo;
 	pthread_mutex_t mutex_print;
@@ -50,6 +50,7 @@ typedef struct s_table
 }				t_table;
 
 size_t	get_time();
+size_t	print_time(t_philo *philo);
 long int	ft_atoi(const char *str);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);

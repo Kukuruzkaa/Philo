@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+         #
+#    By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/23 12:55:59 by ddiakova          #+#    #+#              #
-#    Updated: 2022/01/14 18:44:49 by ddiakova         ###   ########.fr        #
+#    Updated: 2022/01/15 17:20:17 by ddiakova         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM 				= rm -rf
 
 CC 				= clang
 CFLAGS 			= -Wall -Werror -Wextra -g -pthread 
-#FSAN			= -g3 -fsanitize=address
+# FSAN			= -g3 -fsanitize=thread
 SRCDIR 			= src
 OBJDIR 			= objs
 
