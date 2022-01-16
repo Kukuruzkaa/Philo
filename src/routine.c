@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/15 21:42:12 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 14:04:11 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ bool	is_dead(t_philo *philo) // en dehors de routine
 		pthread_mutex_unlock(&philo->m_meal);
 		pthread_mutex_lock(philo->mutex_print);
 		*philo->dead = true;
+		// ft_putnbr_fd(print_time(philo), 1);
+		// ft_putstr_fd(" Philosopher ", 1);
+		// ft_putnbr_fd(philo->p_id, 1);
+		// ft_putstr_fd(" is dead\n", 1);
 		pthread_mutex_unlock(philo->mutex_print);
 		return (true);
 	}

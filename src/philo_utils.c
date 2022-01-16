@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiakova <ddiakova@42.student.fr>          +#+  +:+       +#+        */
+/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:59:57 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/14 18:44:26 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 18:50:24 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_strlen(const char *s)
+{
+	int		l;
+
+	l = 0;
+	while (s[l] != '\0')
+	{
+		l++;
+	}
+	return (l);
+}
 
 long int	ft_atoi(const char *str)
 {
@@ -58,7 +70,6 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-
 void	ft_putnbr_fd(int n, int fd)
 {
 	long int	nb;
@@ -84,4 +95,11 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	else
 		ft_putchar_fd((nb + 48), fd);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

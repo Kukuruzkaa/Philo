@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/15 22:02:01 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 19:00:59 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,8 @@ int	main(int argc, char **argv)
 	t_table 		table;
 	int				i;
 	
-	if (argc != 5 && argc != 6)
+	if (check_args(argc,argv) != 0)
 		return (1);
-	
 	i = 0;
 	table.dead = false;
 	table.count = ft_atoi(argv[1]);
