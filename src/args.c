@@ -6,17 +6,11 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 14:54:43 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 19:16:39 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 19:21:05 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	str_error(char *str)
-{
-	write(2, str, ft_strlen(str));
-	return (1);
-}
 
 int	min_and_max_int(long int nb)
 {

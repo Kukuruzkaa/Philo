@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 18:51:07 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 19:31:19 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ typedef struct s_table
 
 size_t	get_time();
 size_t	print_time(t_philo *philo);
+void	sleep_u(int given_time);
 long int	ft_atoi(const char *str);
 int			ft_strlen(const char *s);
 int	ft_isdigit(int c);
+int	str_error(char *str);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putnbr_fd(int n, int fd);

@@ -6,22 +6,36 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:59:57 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 18:50:24 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 19:31:01 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_strlen(const char *s)
+size_t	get_time()
 {
-	int		l;
+	struct timeval tv;
+	
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));	
+}
 
-	l = 0;
-	while (s[l] != '\0')
-	{
-		l++;
-	}
-	return (l);
+void	sleep_u(int given_time)
+{
+	size_t	delay;
+
+	delay = get_time() + given_time;
+	while (get_time() < delay)
+		usleep(40);	
+}
+
+size_t	print_time(t_philo *philo)
+{
+	size_t time;
+	size_t time_to_print;
+
+	time = get_time();
+	return (time_to_print = time - *philo->start_time);
 }
 
 long int	ft_atoi(const char *str)
@@ -51,25 +65,6 @@ long int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	int i;
-
-	if (!s || !fd)
-		return ;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-}
-
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
-
 void	ft_putnbr_fd(int n, int fd)
 {
 	long int	nb;
@@ -95,11 +90,4 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	else
 		ft_putchar_fd((nb + 48), fd);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
 }

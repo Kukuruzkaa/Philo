@@ -6,7 +6,7 @@
 #    By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/23 12:55:59 by ddiakova          #+#    #+#              #
-#    Updated: 2022/01/16 18:50:41 by ddiakova         ###   ########.fr        #
+#    Updated: 2022/01/16 19:27:47 by ddiakova         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ NAME			= philo
 SRCS 			= philo.c \
 				philo_utils.c \
 				routine.c \
-				args.c
+				args.c \
+				lib.c \
+				output.c \
 				
 OBJS			= $(SRCS:%.c=%.o)
 

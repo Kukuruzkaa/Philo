@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 19:00:59 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/16 19:31:23 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,6 @@
 # include <fcntl.h>
 # include <pthread.h>
 # include <sys/time.h>
-
-size_t	get_time()
-{
-	struct timeval tv;
-	
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));	
-}
-
-void	sleep_u(int given_time)
-{
-	size_t	delay;
-
-	delay = get_time() + given_time;
-	while (get_time() < delay)
-		usleep(40);	
-}
 
 bool	am_i_dead(t_philo *philo)
 {
@@ -87,16 +70,6 @@ void	*routine(void *param)
 		pthread_mutex_unlock(ph->mutex_print);
 	}
 	return (NULL);
-}
-
-
-size_t	print_time(t_philo *philo)
-{
-	size_t time;
-	size_t time_to_print;
-
-	time = get_time();
-	return (time_to_print = time - *philo->start_time);
 }
 
 
