@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output.c                                           :+:      :+:    :+:   */
+/*   join_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/16 19:22:21 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/17 18:20:18 by ddiakova         ###   ########.fr       */
+/*   Created: 2022/01/17 19:52:05 by ddiakova          #+#    #+#             */
+/*   Updated: 2022/01/17 19:57:11 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_state(t_philo *philo, char *s1, char *s2)
+int	join_and_destroy(t_table *table,t_philo *philo)
 {
-	ft_putnbr_fd(print_time(philo), 1);
-	ft_putstr_fd(s1, 1);
-	ft_putnbr_fd(philo->p_id, 1);
-	ft_putstr_fd(s2, 1);
+	int i;
+	
+	i = 0;
+	while (i < table->count)
+	{
+		if (pthread_join(philo[i].thread, 0) != 0) 
+	 		return (str_error(THREAD_ERROR));
+	 	printf ("Philo %d has finished\n", i + 1);
+		i++;
+	}
+	pthread_mutex_destroy(&table->mutex_print);
+	return (0);
 }

@@ -6,11 +6,28 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 14:04:11 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/17 19:50:55 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	philos_at_table(t_table *table, t_philo *philo)
+{
+	int i;
+	
+	i = 0;
+	while (i < table->count)
+	{
+		philo[i].mutex_print = &table->mutex_print;
+		philo[i].last_meal = table->start_time;
+		if (pthread_create(&philo[i].thread, 0, &dining, &philo[i]) != 0)
+			return (str_error(THREAD_ERROR));
+		i++;
+	}
+	return (0);
+}
+
 
 bool	is_dead(t_philo *philo) // en dehors de routine
 {
@@ -23,10 +40,6 @@ bool	is_dead(t_philo *philo) // en dehors de routine
 		pthread_mutex_unlock(&philo->m_meal);
 		pthread_mutex_lock(philo->mutex_print);
 		*philo->dead = true;
-		// ft_putnbr_fd(print_time(philo), 1);
-		// ft_putstr_fd(" Philosopher ", 1);
-		// ft_putnbr_fd(philo->p_id, 1);
-		// ft_putstr_fd(" is dead\n", 1);
 		pthread_mutex_unlock(philo->mutex_print);
 		return (true);
 	}
@@ -38,18 +51,12 @@ void	taking_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->forks[0]);
 	pthread_mutex_lock(philo->mutex_print);
-	ft_putnbr_fd(print_time(philo), 1);
-	ft_putstr_fd(" Philosopher ", 1);
-	ft_putnbr_fd(philo->p_id, 1);
-	ft_putstr_fd(" has taken a fork\n", 1);
+	print_state(philo, PHILO, TAKEN_FORK);
 	pthread_mutex_unlock(philo->mutex_print);
 	
 	pthread_mutex_lock(philo->forks[1]);
 	pthread_mutex_lock(philo->mutex_print);
-	ft_putnbr_fd(print_time(philo), 1);
-	ft_putstr_fd(" Philosopher ", 1);
-	ft_putnbr_fd(philo->p_id, 1);
-	ft_putstr_fd(" has taken a fork\n", 1);
+	print_state(philo, PHILO, TAKEN_FORK);
 	pthread_mutex_unlock(philo->mutex_print);	
 }
 
@@ -58,9 +65,6 @@ void	puting_down(t_philo *philo)
 	pthread_mutex_unlock(philo->forks[1]);
 	pthread_mutex_unlock(philo->forks[0]);
 	pthread_mutex_lock(philo->mutex_print);
-	ft_putnbr_fd(print_time(philo), 1);
-	ft_putstr_fd(" Philosopher ", 1);
-	ft_putnbr_fd(philo->p_id, 1);
-	ft_putstr_fd(" is sleeping\n", 1);
+	print_state(philo, PHILO, SLEEPING);
 	pthread_mutex_unlock(philo->mutex_print);
 }

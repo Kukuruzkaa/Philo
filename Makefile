@@ -6,7 +6,7 @@
 #    By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/23 12:55:59 by ddiakova          #+#    #+#              #
-#    Updated: 2022/01/16 19:27:47 by ddiakova         ###   ########.fr        #
+#    Updated: 2022/01/17 19:54:51 by ddiakova         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRCS 			= philo.c \
 				args.c \
 				lib.c \
 				output.c \
+				init.c \
+				join_free.c
 				
 OBJS			= $(SRCS:%.c=%.o)
 

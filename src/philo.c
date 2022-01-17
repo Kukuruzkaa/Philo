@@ -6,18 +6,11 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 19:31:23 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/17 20:12:07 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <pthread.h>
-# include <sys/time.h>
 
 bool	am_i_dead(t_philo *philo)
 {
@@ -37,7 +30,7 @@ bool	someone_is_dead(t_table *table)
 	return (state);
 }
 
-void	*routine(void *param)
+void	*dining(void *param)
 {
 	t_philo *ph;
 
@@ -49,10 +42,7 @@ void	*routine(void *param)
 		pthread_mutex_lock(ph->mutex_print);
 		if (ph->dead)
 		{
-			ft_putnbr_fd(print_time(ph), 1);
-			ft_putstr_fd(" Philosopher ", 1);
-			ft_putnbr_fd(ph->p_id, 1);
-			ft_putstr_fd(" is eating\n", 1);
+			print_state(ph, PHILO, EATING);
 			pthread_mutex_lock(&ph->m_meal);
 			ph->last_meal = get_time();
 			ph->meal++;
@@ -63,21 +53,10 @@ void	*routine(void *param)
 		puting_down(ph);
 		sleep_u(ph->time_to_sleep);
 		pthread_mutex_lock(ph->mutex_print);
-		ft_putnbr_fd(print_time(ph), 1);
-		ft_putstr_fd(" Philosopher ", 1);
-		ft_putnbr_fd(ph->p_id, 1);
-		ft_putstr_fd(" is thinking\n", 1);
+		print_state(ph, PHILO, THINKING);
 		pthread_mutex_unlock(ph->mutex_print);
 	}
 	return (NULL);
-}
-
-
-int	fork_id(int forks, int i)
-{
-	if (i >= forks)
-		return (i - forks);
-	return (i);
 }
 
 
@@ -88,51 +67,16 @@ int	main(int argc, char **argv)
 	int				i;
 	
 	if (check_args(argc,argv) != 0)
-		return (1);
-	i = 0;
-	table.dead = false;
-	table.count = ft_atoi(argv[1]);
-	table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table.count);
-	table.start_time = get_time();
-	while (i < table.count)
-	{
-		pthread_mutex_init(&table.forks[i], 0);
-		i++;
-	}
+		return (1);	
+	init_table(&table, argv);
 	philo = (t_philo *)malloc(sizeof(t_philo) * table.count);
 	table.philo = philo;
 	if (philo == NULL)
-		return (1);
-	i = 0;
-	while (i < table.count)
-	{
-		philo[i].p_id = i + 1;
-		philo[i].time_to_die = ft_atoi(argv[2]);
-		philo[i].time_to_eat = ft_atoi(argv[3]);
-		philo[i].time_to_sleep = ft_atoi(argv[4]);
-		if (argc == 6)
-			philo[i].max_meal = ft_atoi(argv[5]);
-		philo[i].forks[i % 2] = &table.forks[fork_id(table.count, i)];
-		philo[i].forks[(i + 1) % 2] = &table.forks[fork_id(table.count, i + 1)];	
-		philo[i].dead = &table.dead;
-		philo[i].start_time = &table.start_time;
-		philo[i].meal = 0;
-		pthread_mutex_init(&philo[i].m_meal, 0);
-		i++;
-	}
-	
-	pthread_mutex_init(&table.mutex_print, 0);
-	
-	i = 0;
-	while (i < table.count)
-	{
-		philo[i].mutex_print = &table.mutex_print;
-		philo[i].last_meal = table.start_time;
-		if (pthread_create(&philo[i].thread, 0, &routine, &philo[i]) != 0)
-			return (1);
-		i++;
-	}
-	
+		return (str_error(MALLOC_ERROR));
+	init_forks(&table);
+	set_table(&table, philo, argc, argv);
+	philos_at_table(&table, philo);
+
 	i = 0;
 	while (!someone_is_dead(&table))
 	{
@@ -141,16 +85,7 @@ int	main(int argc, char **argv)
 		if (i == table.count)
 			i = 0;	
 	}
-
-	i = 0;
-	while (i < table.count)
-	{
-		if (pthread_join(philo[i].thread, 0) != 0) 
-	 		return (2);
-	 	printf ("Philo %d has finished\n", i + 1);
-		i++;
-	}
 	
-	pthread_mutex_destroy(&table.mutex_print);
+	join_and_destroy(&table, philo);
 	return (0);
 }
