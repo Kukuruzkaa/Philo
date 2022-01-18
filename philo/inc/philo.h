@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 17:53:39 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:52:47 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,12 @@ void		ft_putstr_fd(char *s, int fd);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putnbr_fd(int n, int fd);
 long int	ft_atoi(const char *str);
+void		*ft_memset(void *b, int c, size_t len);
 
 int			check_args(t_args *args, int argc, char **argv);
-int			init_table(t_table *table, char **argv);
+int			init_table(t_table *table, t_args args);
 int			init_forks(t_table *table);
-void		set_table(t_table *table, t_philo *philo, int argc, char **argv);
+void		set_table(t_table *table, t_philo *philo, t_args args, int argc);
 int			philos_at_table(t_table *table, t_philo *philo);
 void		*dining(void *param);
 

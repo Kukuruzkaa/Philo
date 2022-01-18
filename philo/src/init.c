@@ -6,16 +6,16 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:22:34 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/17 19:49:14 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:50:56 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_table(t_table *table, char **argv)
+int	init_table(t_table *table, t_args args)
 {
 	table->dead = false;
-	table->count = ft_atoi(argv[1]);
+	table->count = args.nb;
 	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->count);
 	if (!table->forks)
 		return (str_error(MALLOC_ERROR));
@@ -43,7 +43,7 @@ int	fork_id(int forks, int i)
 	return (i);
 }
 
-void	set_table(t_table *table, t_philo *philo, int argc, char **argv)
+void	set_table(t_table *table, t_philo *philo, t_args args, int argc)
 {
 	int	i;
 
@@ -51,11 +51,11 @@ void	set_table(t_table *table, t_philo *philo, int argc, char **argv)
 	while (i < table->count)
 	{
 		philo[i].p_id = i + 1;
-		philo[i].time_to_die = ft_atoi(argv[2]);
-		philo[i].time_to_eat = ft_atoi(argv[3]);
-		philo[i].time_to_sleep = ft_atoi(argv[4]);
+		philo[i].time_to_die = args.t_die;
+		philo[i].time_to_eat = args.t_eat;
+		philo[i].time_to_sleep = args.t_sleep;
 		if (argc == 6)
-			philo[i].max_meal = ft_atoi(argv[5]);
+			philo[i].max_meal = args.nb_meal;
 		philo[i].forks[i % 2] = &table->forks[fork_id(table->count, i)];
 		philo[i].forks[(i + 1) % 2] = &table->forks[fork_id(table->count, i + 1)];	
 		philo[i].dead = &table->dead;

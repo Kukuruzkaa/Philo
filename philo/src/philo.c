@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 17:56:38 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:52:59 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,16 @@ int	main(int argc, char **argv)
 	int				i;
 	
 	if (check_args(&args, argc, argv) != 0)
-		return (1);	
-	init_table(&table, argv);
+		return (1);
+	ft_memset(&table, 0, sizeof(t_table));
+	init_table(&table, args);
 	philo = (t_philo *)malloc(sizeof(t_philo) * table.count);
+	ft_memset(philo, 0, sizeof(t_philo) * table.count);
 	table.philo = philo;
 	if (philo == NULL)
 		return (str_error(MALLOC_ERROR));
 	init_forks(&table);
-	set_table(&table, philo, argc, argv);
+	set_table(&table, philo, args, argc);
 	philos_at_table(&table, philo);
 
 	i = 0;

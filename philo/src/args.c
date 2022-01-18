@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 14:54:43 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 17:33:12 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:44:19 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		check_args(t_args *args, int argc, char **argv)
 {
 	int	i;
 
+	ft_memset(args, 0, sizeof(t_args));
 	if (argc < 5 || argc > 6)
 		return (str_error(ARG_NB_ERROR));
 	i = 1;

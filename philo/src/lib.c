@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:25:25 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/16 19:27:00 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:52:04 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,19 @@ int	str_error(char *str)
 {
 	write(2, str, ft_strlen(str));
 	return (1);
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned int	index;
+	char			*str;
+
+	str = (char *)b;
+	index = 0;
+	while (index < len)
+	{
+		str[index] = (unsigned char)c;
+		index++;
+	}
+	return (b);
 }
