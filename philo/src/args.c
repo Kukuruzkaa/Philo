@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 14:54:43 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 20:29:42 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:53:25 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ int	check_args_type(char *str)
 	return (0);
 }
 
-void	init_args(int argc, char **argv, t_args *args)
+int	init_args(int argc, char **argv, t_args *args)
 {
 	args->nb = ft_atoi(argv[1]);
+	if (args->nb == 0)
+		return (1);
 	args->t_die = ft_atoi(argv[2]);
 	args->t_eat = ft_atoi(argv[3]);
 	args->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		args->nb_meal = ft_atoi(argv[5]);
+	return (0);
 }
 
 int	min_and_max_int(long int nb)
@@ -79,7 +82,8 @@ int		check_args(t_args *args, int argc, char **argv)
 			return (str_error(ARG_ERROR));
 		i++;
 	}
-	init_args(argc, argv, args);
+	if (init_args(argc, argv, args))
+		return (str_error(ARG_ERROR));
 	if (check_int(args) != 0)
 		return (1);
 	return (0);
