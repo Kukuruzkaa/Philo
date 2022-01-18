@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 18:52:59 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:43:34 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int argc, char **argv)
 	t_table 		table;
 	t_args			args;
 	int				i;
+	int				eat_enough;
 	
 	if (check_args(&args, argc, argv) != 0)
 		return (1);
@@ -79,12 +80,22 @@ int	main(int argc, char **argv)
 	philos_at_table(&table, philo);
 
 	i = 0;
+	eat_enough = 0;
 	while (!someone_is_dead(&table))
 	{
-		if (is_dead(&philo[i]))
-			i++;
+		is_dead(&philo[i]);
+		pthread_mutex_lock(&philo[i].m_meal);
+		if (philo[i].max_meal && philo[i].meal >= philo[i].max_meal)
+			eat_enough++;
+		if (eat_enough == table.count)
+			*philo->dead = true;
+		pthread_mutex_unlock(&philo[i].m_meal);
+		i++;
 		if (i == table.count)
-			i = 0;	
+		{
+			i = 0;
+			eat_enough = 0;
+		}	
 	}
 	if (someone_is_dead(&table))
 		join_and_destroy(&table, philo);
