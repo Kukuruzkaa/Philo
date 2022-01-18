@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 18:52:47 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:59:27 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			philos_at_table(t_table *table, t_philo *philo);
 void		*dining(void *param);
 
 bool		is_dead(t_philo *philo);
-bool		am_i_dead(t_philo *philo);
+bool		alive(t_philo *philo);
 void		taking_forks(t_philo *philo);
 void		puting_down(t_philo *philo);
 

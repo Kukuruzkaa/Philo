@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 18:29:36 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:59:27 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	taking_forks(t_philo *philo)
 		print_state(philo, PHILO, TAKEN_FORK, false);
 	}
 	else
-		while (!am_i_dead(philo))
+		while (!alive(philo))
 			usleep(100);
 }
 

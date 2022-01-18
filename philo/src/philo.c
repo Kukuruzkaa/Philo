@@ -6,17 +6,17 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 20:43:34 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:07:52 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	am_i_dead(t_philo *philo)
+bool	alive(t_philo *philo)
 {
 	bool	value;
 	pthread_mutex_lock(philo->mutex_print);
-	value = *philo->dead;
+	value = !*philo->dead;
 	pthread_mutex_unlock(philo->mutex_print);
 	return (value);
 }
@@ -36,7 +36,7 @@ void	*dining(void *param)
 
 	ph = (t_philo *)param;
 	
-	while (!am_i_dead(ph))
+	while (alive(ph))
 	{
 		taking_forks(ph);
 		pthread_mutex_lock(ph->mutex_print);
@@ -97,7 +97,6 @@ int	main(int argc, char **argv)
 			eat_enough = 0;
 		}	
 	}
-	if (someone_is_dead(&table))
-		join_and_destroy(&table, philo);
+	join_and_destroy(&table, philo);
 	return (0);
 }
