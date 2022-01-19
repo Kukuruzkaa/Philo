@@ -6,30 +6,39 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 20:59:27 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:21:35 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	philos_at_table(t_table *table, t_philo *philo)
+void	*dining(void *param)
 {
-	int i;
-	
-	i = 0;
-	while (i < table->count)
+	t_philo	*ph;
+
+	ph = (t_philo *)param;
+	while (alive(ph))
 	{
-		philo[i].mutex_print = &table->mutex_print;
-		philo[i].last_meal = table->start_time;
-		if (pthread_create(&philo[i].thread, 0, &dining, &philo[i]) != 0)
-			return (str_error(THREAD_ERROR));
-		i++;
+		taking_forks(ph);
+		pthread_mutex_lock(ph->mutex_print);
+		if (ph->dead)
+		{
+			print_state(ph, PHILO, EATING, true);
+			pthread_mutex_lock(&ph->m_meal);
+			ph->last_meal = get_time();
+			ph->meal++;
+			pthread_mutex_unlock(&ph->m_meal);
+		}
+		pthread_mutex_unlock(ph->mutex_print);
+		sleep_u(ph->time_to_eat);
+		puting_down(ph);
+		sleep_u(ph->time_to_sleep);
+		print_state(ph, PHILO, THINKING, false);
 	}
-	return (0);
+	return (NULL);
 }
 
-
-bool	is_dead(t_philo *philo) // en dehors de routine
+bool	is_dead(t_philo *philo)
 {
 	size_t	time_now;
 
@@ -48,24 +57,22 @@ bool	is_dead(t_philo *philo) // en dehors de routine
 	return (false);
 }
 
-void	taking_forks(t_philo *philo)
+bool	alive(t_philo *philo)
 {
-	pthread_mutex_lock(philo->forks[0]);
-	print_state(philo, PHILO, TAKEN_FORK, false);
-	if (philo->forks[0] != philo->forks[1])
-	{
-		pthread_mutex_lock(philo->forks[1]);
-		print_state(philo, PHILO, TAKEN_FORK, false);
-	}
-	else
-		while (!alive(philo))
-			usleep(100);
+	bool	value;
+
+	pthread_mutex_lock(philo->mutex_print);
+	value = !*philo->dead;
+	pthread_mutex_unlock(philo->mutex_print);
+	return (value);
 }
 
-void	puting_down(t_philo *philo)
+bool	someone_is_dead(t_table *table)
 {
-	pthread_mutex_unlock(philo->forks[1]);
-	if (philo->forks[0] != philo->forks[1])
-		pthread_mutex_unlock(philo->forks[0]);
-	print_state(philo, PHILO, SLEEPING, false);
+	bool	state;
+
+	pthread_mutex_lock(&table->mutex_print);
+	state = table->dead;
+	pthread_mutex_unlock(&table->mutex_print);
+	return (state);
 }

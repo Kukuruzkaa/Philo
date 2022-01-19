@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 20:59:27 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:52:41 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct s_table
 
 size_t		get_time(void);
 void		sleep_u(int given_time);
-
 size_t		print_time(t_philo *philo);
 void		print_state(t_philo *philo, char *s1, char *s2, bool locked);
 
@@ -92,6 +91,7 @@ void		*dining(void *param);
 
 bool		is_dead(t_philo *philo);
 bool		alive(t_philo *philo);
+bool		someone_is_dead(t_table *table);
 void		taking_forks(t_philo *philo);
 void		puting_down(t_philo *philo);
 

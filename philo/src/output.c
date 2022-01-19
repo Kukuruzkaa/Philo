@@ -6,11 +6,17 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:22:21 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 18:30:40 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:16:28 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	str_error(char *str)
+{
+	write(2, str, ft_strlen(str));
+	return (1);
+}
 
 void	print_state(t_philo *philo, char *s1, char *s2, bool locked)
 {

@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:25:25 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 18:52:04 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:15:34 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_putchar_fd(char c, int fd)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int i;
+	int	i;
 
 	if (!s || !fd)
 		return ;
@@ -48,12 +48,6 @@ int	ft_isdigit(int c)
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
-}
-
-int	str_error(char *str)
-{
-	write(2, str, ft_strlen(str));
-	return (1);
 }
 
 void	*ft_memset(void *b, int c, size_t len)

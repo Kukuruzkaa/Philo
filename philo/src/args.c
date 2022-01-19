@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 14:54:43 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 20:53:25 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:30:53 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_args_type(char *str)
 {
 	int	i;
-	
+
 	if (str[0] == '\0')
 		return (1);
 	if (str[0] == '-')
@@ -33,13 +33,18 @@ int	check_args_type(char *str)
 int	init_args(int argc, char **argv, t_args *args)
 {
 	args->nb = ft_atoi(argv[1]);
-	if (args->nb == 0)
-		return (1);
 	args->t_die = ft_atoi(argv[2]);
 	args->t_eat = ft_atoi(argv[3]);
 	args->t_sleep = ft_atoi(argv[4]);
+	if (args->nb == 0 || args->t_die == 0
+		|| args->t_eat == 0 || args->t_sleep == 0)
+		return (1);
 	if (argc == 6)
+	{
 		args->nb_meal = ft_atoi(argv[5]);
+		if (args->nb_meal == 0)
+			return (1);
+	}
 	return (0);
 }
 
@@ -68,7 +73,7 @@ int	check_int(t_args *args)
 	return (0);
 }
 
-int		check_args(t_args *args, int argc, char **argv)
+int	check_args(t_args *args, int argc, char **argv)
 {
 	int	i;
 

@@ -6,21 +6,21 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 19:52:05 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/18 21:06:14 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:15:05 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	join_and_destroy(t_table *table,t_philo *philo)
+int	join_and_destroy(t_table *table, t_philo *philo)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < table->count)
 	{
-		if (pthread_join(philo[i].thread, 0) != 0) 
-	 		return (str_error(THREAD_ERROR));
+		if (pthread_join(philo[i].thread, 0) != 0)
+			return (str_error(THREAD_ERROR));
 		pthread_mutex_destroy(&philo[i].m_meal);
 		pthread_mutex_destroy(philo[i].forks[0]);
 		i++;
