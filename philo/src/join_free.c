@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 19:52:05 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/19 20:15:05 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/20 14:59:21 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ int	join_and_destroy(t_table *table, t_philo *philo)
 		if (pthread_join(philo[i].thread, 0) != 0)
 			return (str_error(THREAD_ERROR));
 		pthread_mutex_destroy(&philo[i].m_meal);
-		pthread_mutex_destroy(philo[i].forks[0]);
+		i++;
+	}
+	i = 0;
+	while (i < table->count)
+	{
+		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
 	pthread_mutex_destroy(&table->mutex_print);
