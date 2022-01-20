@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/19 20:23:11 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:36:13 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	easy_living(t_table *table, t_philo *philo)
 		{
 			i = 0;
 			eat_enough = 0;
-		}	
+		}
+		usleep(400);	
 	}
 	return (0);
 }

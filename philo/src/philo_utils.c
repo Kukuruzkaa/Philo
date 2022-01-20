@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:59:57 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/19 20:19:57 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:13:18 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	taking_forks(t_philo *philo)
 		print_state(philo, PHILO, TAKEN_FORK, false);
 	}
 	else
-		while (!alive(philo))
+		while (alive(philo))
 			usleep(100);
 }
 
-void	puting_down(t_philo *philo)
+void	putting_down(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->forks[1]);
 	if (philo->forks[0] != philo->forks[1])

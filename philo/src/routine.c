@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/19 20:21:35 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:14:14 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*dining(void *param)
 		}
 		pthread_mutex_unlock(ph->mutex_print);
 		sleep_u(ph->time_to_eat);
-		puting_down(ph);
+		putting_down(ph);
 		sleep_u(ph->time_to_sleep);
 		print_state(ph, PHILO, THINKING, false);
 	}
