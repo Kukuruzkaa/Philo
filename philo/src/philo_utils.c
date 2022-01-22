@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:59:57 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 16:54:37 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/22 20:21:59 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ size_t	print_time(t_philo *philo)
 
 void	taking_forks(t_philo *philo)
 {
+	pthread_mutex_lock(philo->mutex_dead);
+	if (philo->dead)
+		pthread_mutex_unlock(philo->mutex_dead);
+	else
+		pthread_mutex_unlock(philo->mutex_dead);
 	pthread_mutex_lock(philo->forks[0]);
 	print_state(philo, PHILO, TAKEN_FORK, false);
 	if (philo->forks[0] != philo->forks[1])
@@ -57,5 +62,4 @@ void	putting_down(t_philo *philo)
 	pthread_mutex_unlock(philo->forks[1]);
 	if (philo->forks[0] != philo->forks[1])
 		pthread_mutex_unlock(philo->forks[0]);
-	print_state(philo, PHILO, SLEEPING, false);
 }

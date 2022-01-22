@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:00:02 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 16:13:32 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/22 19:20:29 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_philo
 	size_t			last_meal;
 	pthread_mutex_t	m_meal;
 	pthread_mutex_t	*mutex_print;
+	pthread_mutex_t	*mutex_dead;
 	pthread_mutex_t	*forks[2];
 	pthread_t		thread;
 }				t_philo;
@@ -65,6 +66,7 @@ typedef struct s_table
 	bool			dead;
 	size_t			start_time;
 	t_philo			*philo;
+	pthread_mutex_t	mutex_dead;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	*forks;
 }				t_table;

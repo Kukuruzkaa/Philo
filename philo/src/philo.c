@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 16:56:40 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/22 20:36:50 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,29 @@ int	easy_living(t_table *table, t_philo *philo)
 		is_dead(&philo[i]);
 		pthread_mutex_lock(&philo[i].m_meal);
 		if (philo[i].max_meal && philo[i].meal >= philo[i].max_meal)
+		{
 			eat_enough++;
+			pthread_mutex_unlock(&philo[i].m_meal);	
+		}
+		else
+			pthread_mutex_unlock(&philo[i].m_meal);
 		if (eat_enough == table->count)
+		{
+			pthread_mutex_lock(philo[i].mutex_dead);
+
 			*philo->dead = true;
-		pthread_mutex_unlock(&philo[i].m_meal);
+			pthread_mutex_lock(philo[i].mutex_print);
+			printf("i fucking put variable dead to true!!!\n");
+			pthread_mutex_unlock(philo[i].mutex_print);
+			pthread_mutex_unlock(philo[i].mutex_dead);
+		}
 		i++;
 		if (i == table->count)
 		{
 			i = 0;
 			eat_enough = 0;
 		}
-		usleep(400);	
+		usleep(520);	
 	}
 	return (0);
 }

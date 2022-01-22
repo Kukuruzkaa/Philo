@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 16:53:09 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/22 20:18:58 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,16 @@ void	*dining(void *param)
 	ph = (t_philo *)param;
 	while (alive(ph))
 	{
+		
 		taking_forks(ph);
-		pthread_mutex_lock(ph->mutex_print);
-		if (ph->dead)
-		{
-			print_state(ph, PHILO, EATING, true);
-			pthread_mutex_lock(&ph->m_meal);
-			ph->last_meal = get_time();
-			ph->meal++;
-			pthread_mutex_unlock(&ph->m_meal);
-		}
-		pthread_mutex_unlock(ph->mutex_print);
+		print_state(ph, PHILO, EATING, false);
+		pthread_mutex_lock(&ph->m_meal);
+		ph->last_meal = get_time();
+		ph->meal++;
+		pthread_mutex_unlock(&ph->m_meal);
 		sleep_u(ph->time_to_eat);
 		putting_down(ph);
+		print_state(ph, PHILO, SLEEPING, false);
 		sleep_u(ph->time_to_sleep);
 		print_state(ph, PHILO, THINKING, false);
 	}
@@ -49,8 +46,10 @@ bool	is_dead(t_philo *philo)
 		pthread_mutex_unlock(&philo->m_meal);
 		pthread_mutex_lock(philo->mutex_print);
 		print_state(philo, PHILO, IS_DEAD, true);
-		*philo->dead = true;
 		pthread_mutex_unlock(philo->mutex_print);
+		pthread_mutex_lock(philo->mutex_dead);
+		*philo->dead = true;
+		pthread_mutex_unlock(philo->mutex_dead);
 		return (true);
 	}
 	pthread_mutex_unlock(&philo->m_meal);

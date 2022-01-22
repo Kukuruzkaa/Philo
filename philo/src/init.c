@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:22:34 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/19 20:13:04 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/22 19:28:15 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	set_table(t_table *table, t_philo *philo, t_args args, int argc)
 		i++;
 	}
 	pthread_mutex_init(&table->mutex_print, 0);
+	pthread_mutex_init(&table->mutex_dead, 0);
 }
 
 int	philos_at_table(t_table *table, t_philo *philo)
@@ -77,6 +78,7 @@ int	philos_at_table(t_table *table, t_philo *philo)
 	while (i < table->count)
 	{
 		philo[i].mutex_print = &table->mutex_print;
+		philo[i].mutex_dead = &table->mutex_dead;
 		philo[i].last_meal = table->start_time;
 		if (pthread_create(&philo[i].thread, 0, &dining, &philo[i]) != 0)
 			return (str_error(THREAD_ERROR));
