@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:59:57 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/20 15:13:18 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/22 16:54:37 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	taking_forks(t_philo *philo)
 	}
 	else
 		while (alive(philo))
-			usleep(100);
+			usleep(200);
 }
 
 void	putting_down(t_philo *philo)
