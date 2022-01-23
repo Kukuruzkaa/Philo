@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:04:48 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 20:18:58 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/23 19:06:45 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	*dining(void *param)
 	ph = (t_philo *)param;
 	while (alive(ph))
 	{
-		
 		taking_forks(ph);
 		print_state(ph, PHILO, EATING, false);
 		pthread_mutex_lock(&ph->m_meal);
@@ -60,9 +59,9 @@ bool	alive(t_philo *philo)
 {
 	bool	value;
 
-	pthread_mutex_lock(philo->mutex_print);
+	pthread_mutex_lock(philo->mutex_dead);
 	value = !*philo->dead;
-	pthread_mutex_unlock(philo->mutex_print);
+	pthread_mutex_unlock(philo->mutex_dead);
 	return (value);
 }
 
@@ -70,8 +69,8 @@ bool	someone_is_dead(t_table *table)
 {
 	bool	state;
 
-	pthread_mutex_lock(&table->mutex_print);
+	pthread_mutex_lock(&table->mutex_dead);
 	state = table->dead;
-	pthread_mutex_unlock(&table->mutex_print);
+	pthread_mutex_unlock(&table->mutex_dead);
 	return (state);
 }

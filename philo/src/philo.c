@@ -6,38 +6,29 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:02:00 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 20:36:50 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/23 19:10:46 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	easy_living(t_table *table, t_philo *philo)
+int	monitoring(t_table *table, t_philo *philo, int i, int eat_enough)
 {
-	int				i;
-	int				eat_enough;
-
-	i = 0;
-	eat_enough = 0;
 	while (!someone_is_dead(table))
 	{
 		is_dead(&philo[i]);
 		pthread_mutex_lock(&philo[i].m_meal);
 		if (philo[i].max_meal && philo[i].meal >= philo[i].max_meal)
 		{
+			pthread_mutex_unlock(&philo[i].m_meal);
 			eat_enough++;
-			pthread_mutex_unlock(&philo[i].m_meal);	
 		}
 		else
 			pthread_mutex_unlock(&philo[i].m_meal);
 		if (eat_enough == table->count)
 		{
 			pthread_mutex_lock(philo[i].mutex_dead);
-
-			*philo->dead = true;
-			pthread_mutex_lock(philo[i].mutex_print);
-			printf("i fucking put variable dead to true!!!\n");
-			pthread_mutex_unlock(philo[i].mutex_print);
+			*philo[i].dead = true;
 			pthread_mutex_unlock(philo[i].mutex_dead);
 		}
 		i++;
@@ -46,7 +37,6 @@ int	easy_living(t_table *table, t_philo *philo)
 			i = 0;
 			eat_enough = 0;
 		}
-		usleep(520);	
 	}
 	return (0);
 }
@@ -69,7 +59,7 @@ int	main(int argc, char **argv)
 	init_forks(&table);
 	set_table(&table, philo, args, argc);
 	philos_at_table(&table, philo);
-	easy_living(&table, philo);
+	monitoring(&table, philo, 0, 0);
 	join_and_destroy(&table, philo);
 	return (0);
 }

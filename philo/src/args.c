@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 14:54:43 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 18:32:50 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/23 19:04:25 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	init_args(int argc, char **argv, t_args *args)
 	{
 		args->nb_meal = ft_atoi(argv[5]);
 		if (args->nb_meal == 0)
-		 	exit (0);
+			exit (0);
 	}
 	return (0);
 }

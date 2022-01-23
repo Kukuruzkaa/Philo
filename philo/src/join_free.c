@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 19:52:05 by ddiakova          #+#    #+#             */
-/*   Updated: 2022/01/22 19:26:26 by ddiakova         ###   ########.fr       */
+/*   Updated: 2022/01/23 18:14:26 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	join_and_destroy(t_table *table, t_philo *philo)
 		pthread_mutex_destroy(&philo[i].m_meal);
 		i++;
 	}
-	i = 0;
 	while (i < table->count)
 	{
 		pthread_mutex_destroy(&table->forks[i]);
